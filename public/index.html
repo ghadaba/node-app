@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <title>Blog App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Blog App</h1>
+
+    <!-- Auth Section -->
+    <div id="auth-section">
+        <input type="text" id="name" placeholder="Nom (register uniquement)">
+        <input type="email" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="register()">Register</button>
+        <button onclick="login()">Login</button>
+    </div>
+
+    <!-- Post Section -->
+    <div id="post-section" class="hidden">
+
+        <div class="post-form">
+            <input type="text" id="title" placeholder="Titre">
+            <textarea id="content" placeholder="Contenu"></textarea>
+            <input type="file" id="image" accept="image/*"> <!-- nouveau -->
+            <button onclick="createPost()">Ajouter Post</button>
+            <button onclick="logout()" class="logout">Logout</button>
+        </div>
+
+        <h2>Mes Posts</h2>
+        <div id="posts"></div>
+
+    </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
