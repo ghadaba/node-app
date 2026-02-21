@@ -1,6 +1,6 @@
 const User = require("../models/User");
 
-module.exports = async (req, res, next) => {
+const adminMiddleware = async (req, res, next) => {
     try {
         const user = await User.findById(req.user);
         
@@ -13,3 +13,5 @@ module.exports = async (req, res, next) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+module.exports = adminMiddleware;
