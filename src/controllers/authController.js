@@ -36,7 +36,23 @@ exports.login = async (req, res) => {
             { expiresIn: "1d" }
         );
 
-        res.json({ token });
+        res.json({ token, role: user.role });
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.makeAdmin = async (req, res) => {
+    try {
+        const { email } = req.body;
+
+        const user = await User.findOne({ email });
+        if (!user) return res.status(400).json({ message: "User not found" });
+
+        user.role = "admin";
+        await user.save();
+
+        res.json({ message: "User promoted to admin", user });
     } catch (error) {
         res.status(400).json({ message: error.message });
     }

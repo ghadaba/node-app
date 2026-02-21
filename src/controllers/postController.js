@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const User = require("../models/User");
 
 exports.createPost = async (req, res) => {
     const post = await Post.create({
@@ -9,8 +10,18 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = async (req, res) => {
-    const posts = await Post.find({ user: req.user });
-    res.json(posts);
+    try {
+        const user = await User.findById(req.user);
+        
+        // Si l'utilisateur est admin, retourner tous les posts
+        // Sinon, retourner seulement ses propres posts
+        const filter = user.role === "admin" ? {} : { user: req.user };
+        const posts = await Post.find(filter).populate("user", "name email");
+        
+        res.json(posts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 exports.getPost = async (req, res) => {
