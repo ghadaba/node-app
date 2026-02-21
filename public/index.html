@@ -26,12 +26,12 @@
         <div class="post-form">
             <input type="text" id="title" placeholder="Titre">
             <textarea id="content" placeholder="Contenu"></textarea>
-            <input type="file" id="image" accept="image/*"> <!-- nouveau -->
             <button onclick="createPost()">Ajouter Post</button>
             <button onclick="logout()" class="logout">Logout</button>
         </div>
-
-        <h2>Mes Posts</h2>
+        <input type="text" id="searchInput" placeholder="Rechercher...">
+        <button onclick="searchPosts()">Search</button>
+        <h2>Posts</h2>
         <div id="posts"></div>
 
     </div>

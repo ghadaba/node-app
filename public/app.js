@@ -83,8 +83,13 @@ async function createPost() {
 }
 
 // LOAD POSTS
-async function loadPosts() {
-    const res = await fetch(`${API}/posts`, {
+async function loadPosts(search = "") {
+
+    const url = search
+        ? `${API}/posts?search=${search}`
+        : `${API}/posts`;
+
+    const res = await fetch(url, {
         headers: {
             Authorization: "Bearer " + localStorage.getItem("token")
         }
@@ -95,10 +100,17 @@ async function loadPosts() {
     container.innerHTML = "";
 
     posts.forEach(post => {
+
+        const owner = post.user?.name
+            ? `<small>Propriétaire: ${post.user.name} (${post.user.email})</small>`
+            : "";
+
         container.innerHTML += `
       <div class="post-card">
         <h3>${post.title}</h3>
         <p>${post.content}</p>
+        ${owner}
+        <br/>
         <button onclick="updatePostPrompt('${post._id}', '${post.title}', '${post.content}')">Edit</button>
         <button onclick="deletePost('${post._id}')">Delete</button>
       </div>
@@ -135,4 +147,8 @@ async function updatePostPrompt(id, oldTitle, oldContent) {
     });
 
     loadPosts();
+}
+function searchPosts() {
+    const value = document.getElementById("searchInput").value;
+    loadPosts(value);
 }
